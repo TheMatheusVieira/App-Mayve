@@ -1,9 +1,12 @@
-import {useFonts, SpaceGrotesk_300Light, SpaceGrotesk_700Bold} from "@expo-google-fonts/space-grotesk";
-import { View } from "react-native";
+import React, {useState, useEffect} from "react";
+import { useFonts, SpaceGrotesk_300Light, SpaceGrotesk_700Bold } from "@expo-google-fonts/space-grotesk";
+import { View, TouchableOpacity, Text } from "react-native";
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import { Audio } from "expo-av";
 
 import Produto from './src/telas/Produto';
 import mock from './src/mocks/produto';
@@ -12,12 +15,49 @@ import ListaDesj from "./src/telas/ListaDesejos/ListaD";
 import Cards from "./src/telas/ViewProuto/Visuali"; 
 
 
+
 function MenuKit() {
   return <Produto {...mock} />
 }
 
 function SobreN() {
   return <SobreNos />
+}
+
+function MenuAudio() {
+  const [audioStatus, setAudioStatus] = useState(false)
+  const [sound, setSound] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      console.log('status', audioStatus);
+      if (audioStatus) {
+        setLoading(true);
+        const { sound } = await Audio.Sound.createAsync(require('./assets/mamaequerida.mp3'));
+        setSound(sound);
+        try {
+          await sound.playAsync();
+        } catch (e) {
+          console.log(e);
+        }
+        setLoading(false);
+      } else {
+        if (sound) {
+          try {
+            await sound.stopAsync();
+            await sound.unloadAsync();
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      }
+    })();
+  }, [audioStatus]);
+
+  return <TouchableOpacity onPress={(e) => {if(!loading){setAudioStatus(!audioStatus);}}}>
+    <Text>🔊 ON/OFF</Text>
+  </TouchableOpacity>
 }
 
 function ViewProd() {
@@ -81,6 +121,7 @@ export default function App() {
   }
   //return < Produto />
   return <NavigationContainer >
-            <TabsMenu />
-        </NavigationContainer>
+    <TabsMenu />
+    <MenuAudio/>
+  </NavigationContainer>
 }
