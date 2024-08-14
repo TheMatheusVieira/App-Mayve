@@ -27,7 +27,8 @@
       "favicon": "./assets/Carregamento.jpg"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-video"
     ]
   }
 }

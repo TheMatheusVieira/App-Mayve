@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import { useFonts, SpaceGrotesk_300Light, SpaceGrotesk_700Bold } from "@expo-google-fonts/space-grotesk";
 import { View, TouchableOpacity, Text } from "react-native";
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,7 +12,7 @@ import mock from './src/mocks/produto';
 import SobreNos from "./src/telas/sobre/sobrenos";
 import ListaDesj from "./src/telas/ListaDesejos/ListaD";
 import Cards from "./src/telas/ViewProuto/Visuali"; 
-
+import perfil from "./src/telas/Perfil/perfil";
 
 
 function MenuKit() {
@@ -34,7 +33,7 @@ function MenuAudio() {
       console.log('status', audioStatus);
       if (audioStatus) {
         setLoading(true);
-        const { sound } = await Audio.Sound.createAsync(require('./assets/mamaequerida.mp3'));
+        const { sound } = await Audio.Sound.createAsync(require('./assets/Crazy_ElectronicPop.mp3'));
         setSound(sound);
         try {
           await sound.playAsync();
@@ -92,6 +91,10 @@ function TabsMenu() {
           iconName = focused
             ? 'heart'
             : 'heart-outline';
+        } else if (route.name === "Perfil") {
+          iconName = focused
+            ? 'person'
+            : 'person-circle-outline'
         } 
 
         return <Ionicons name={iconName} size={size} color={color}/>
@@ -105,20 +108,12 @@ function TabsMenu() {
     <Tab.Screen name="Sobre nós" component={SobreN} />
     <Tab.Screen name="Produtos" component={ViewProd} />
     <Tab.Screen name="Lista de Desejos" component={ListaD} />
+    <Tab.Screen name="Perfil" component={perfil} />
 </Tab.Navigator>
 }
 
 export default function App() {
 
-  const [fonteCarregada] = useFonts({
-    "SpaceGregular": SpaceGrotesk_300Light,
-    "SpaceGbold": SpaceGrotesk_700Bold
-  });
-
-  //Verifica se a fonte já foi carregada
-  if (!fonteCarregada) {
-    return <View />;
-  }
   //return < Produto />
   return <NavigationContainer >
     <TabsMenu />

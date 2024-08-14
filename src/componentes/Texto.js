@@ -14,12 +14,4 @@ export default function Texto({ children, style }) {
 }
 
 const estilos = StyleSheet.create({
-    texto: {
-        fontFamily: "SpaceGregular",
-        fontWeight: "normal",
-    },
-    textoNegrito: {
-        fontFamily: "SpaceGbold",
-        fontWeight: "normal",
-    }
 })
