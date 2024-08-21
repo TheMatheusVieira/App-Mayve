@@ -1,9 +1,9 @@
 import React, {useState,  useEffect, useRef} from 'react';
-import { StyleSheet, View, TouchableOpacity, TextInput, Text, PixelRatio } from 'react-native';
-import { useVideoPlayer, VideoView } from 'expo-video';
+import { StyleSheet, View, TouchableOpacity, TextInput, Text, PixelRatio, Button} from 'react-native';
 
-// const videoSource =
-//   'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+import { Video, ResizeMode } from 'expo-av';
+
+// import {VideoLoja} from '../../../assets/videolojaapp.mp4'
 
 export default function Perfil() {
     const [nomeuser, mudaNome] = React.useState('');
@@ -11,22 +11,7 @@ export default function Perfil() {
     const [cidadeuser, mudaCidade] = React.useState('');
     const [profiuser, mudaProfi] = React.useState('');
 
-    // const ref = useRef(null);
-    // const [isPlaying, setIsPlaying] = useState(true);
-    // const player = useVideoPlayer(videoSource, player => {
-    //   player.loop = true;
-    //   player.play();
-    // });
-  
-    // useEffect(() => {
-    //   const subscription = player.addListener('playingChange', isPlaying => {
-    //     setIsPlaying(isPlaying);
-    //   });
-  
-    //   return () => {
-    //     subscription.remove();
-    //   };
-    // }, [player]);
+    const video = React.useRef(null);
 
     return (
 <View style={styles.container}>
@@ -71,18 +56,21 @@ export default function Perfil() {
     />
     </View>           
 </View> 
-            
-    {/* <VideoView
-    ref={ref}
-    style={styles.video}
-    player={player}
-    allowsFullscreen
-    allowsPictureInPicture
-    /> */}
 
     <TouchableOpacity style={styles.btsalvar}>
         <Text>SALVAR INFORMAÇÕES</Text>
-    </TouchableOpacity>      
+            </TouchableOpacity>
+
+<View style={styles.quadroVideo}>
+<Video
+                ref={video}
+                style={styles.video}
+                source={require('../../../assets/videolojaapp.mp4')}
+                useNativeControls
+                resizeMode={ResizeMode.CONTAIN}
+                isLooping
+            />
+            </View>
 </View>
   );
   }
@@ -92,6 +80,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f5f5f5',
         alignItems: 'center',
+    },
+    video: {
+        width: 350,
+        height: 275,
+        alignSelf: "center",
     },
     input: {
         flexDirection: "row",
@@ -105,6 +98,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: 'center',
         gap: 50,
+        marginBottom: 20,
     },
     fundouser: {
         marginBottom: 70,

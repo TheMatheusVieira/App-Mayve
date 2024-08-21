@@ -113,7 +113,6 @@ function TabsMenu() {
 }
 
 export default function App() {
-
   //return < Produto />
   return <NavigationContainer >
     <TabsMenu />
