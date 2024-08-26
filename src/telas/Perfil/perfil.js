@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f5f5f5',
-        alignItems: 'center',
+        alignItems: "center",
     },
     video: {
         width: 350,
