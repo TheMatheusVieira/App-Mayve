@@ -17,7 +17,7 @@
     "@rneui/themed": "^4.0.0-rc.8",
     "expo": "^51.0.24",
     "expo-av": "~14.0.6",
-    "expo-camera": "~15.0.14",
+    "expo-camera": "~15.0.15",
     "expo-font": "~11.10.3",
     "expo-status-bar": "~1.11.1",
     "expo-video": "^1.2.4",
