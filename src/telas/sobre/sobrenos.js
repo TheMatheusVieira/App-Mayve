@@ -1,12 +1,13 @@
 import React from 'react';
-import {StatusBar, StyleSheet, View, Text, Image } from 'react-native';
+import {StatusBar, StyleSheet, View, Text, Image, ScrollView } from 'react-native';
 
 import Icon from '../../../assets/Icone.png'
 import LojaMayve from '../../../assets/lojamayve.png'
 
 export default function SobreNos() {
     return <>
-    <StatusBar/>
+        <StatusBar />
+        <ScrollView>
         <View style={styles.containerS}>
         <Image source={Icon} style={styles.IconeCel}/>
             <Text style={styles.textosobre}> Bem-vindo à Mayve Store, o seu destino definitivo para a mais recente
@@ -15,7 +16,8 @@ export default function SobreNos() {
                 inteligentes e acessórios de última geração.</Text>
             
                 <Image source={LojaMayve} style={styles.ImageLoja}/>
-    </View>
+            </View>
+            </ScrollView>     
 </>
 }
 

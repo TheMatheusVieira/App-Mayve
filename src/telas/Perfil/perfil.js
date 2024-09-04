@@ -6,8 +6,9 @@ import {
   TextInput,
   Text,
   Image,
+  ScrollView
 } from "react-native";
-import { Camera } from "expo-camera";
+import { Camera, CameraType } from "expo-camera/legacy";
 import { Video } from "expo-av";
 
 export default function Perfil() {
@@ -46,6 +47,7 @@ export default function Perfil() {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <TouchableOpacity style={styles.cameraContainer} onPress={handleOpenCamera}>
         {photoUri ? (
@@ -54,16 +56,6 @@ export default function Perfil() {
           <Text style={styles.cameraPlaceholderText}>Clique para abrir a câmera</Text>
         )}
       </TouchableOpacity>
-
-      {/* {isCameraActive && ( */}
-         <Camera style={styles.camera} ref={cameraRef}>
-          {/* <View style={styles.cameraButtonContainer}> */}
-            {/* <TouchableOpacity style={styles.cameraButton} onPress={takePhoto}> */}
-              {/* <Text style={styles.cameraButtonText}>Tirar Foto</Text> */}
-            {/* </TouchableOpacity> */}
-          {/* </View> */}
-        </Camera>
-      {/* // )} */}
 
       <View style={styles.inputContainer}>
         <View style={styles.inputGroup}>
@@ -122,7 +114,22 @@ export default function Perfil() {
           isLooping
         />
       </View>
-    </View>
+
+      {isCameraActive && (
+  <Camera style={styles.camera} ref={cameraRef}>
+    <View style={styles.cameraButtonContainer}> 
+      <TouchableOpacity style={styles.cameraButton} onPress={takePhoto}> 
+        <Text style={styles.cameraButtonText}>Tirar Foto</Text> 
+      </TouchableOpacity> 
+              
+      <TouchableOpacity style={styles.cameraButton}>
+        <Text style={styles.cameraButtonText}>Cancelar</Text> 
+      </TouchableOpacity> 
+    </View> 
+ </Camera>
+        )} 
+      </View>
+      </ScrollView>    
   );
 }
 
@@ -144,8 +151,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   camera: {
-    width: 150,
-    height: 150,
+    width:"100%",
+    height: "100%",
     position: "absolute",
     borderRadius: 75,
   },
@@ -153,11 +160,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 300,
+    flexDirection: "row",
+    gap: 20,
   },
   cameraButton: {
     backgroundColor: "white",
     padding: 10,
     borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
   },
   cameraButtonText: {
     fontSize: 18,
