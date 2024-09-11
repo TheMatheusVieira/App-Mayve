@@ -20,6 +20,9 @@ export default function Perfil() {
   const [photoUri, setPhotoUri] = useState(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const cameraRef = useRef(null);
+  const [cameraType, setCameraType] = useState(CameraType.back);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
+
 
   useEffect(() => {
     const requestCameraPermission = async () => {
@@ -46,6 +49,10 @@ export default function Perfil() {
     }
   };
 
+  const switchCamera = () => {
+    setCameraType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+  };
+  
   return (
     <ScrollView>
     <View style={styles.container}>
@@ -122,7 +129,11 @@ export default function Perfil() {
         <Text style={styles.cameraButtonText}>Tirar Foto</Text> 
       </TouchableOpacity> 
               
-      <TouchableOpacity style={styles.cameraButton}>
+      <TouchableOpacity onPress={() => switchCamera()}>
+        <Text style={styles.switchCamIcon}>↻</Text>
+      </TouchableOpacity>
+        
+      <TouchableOpacity style={styles.cameraButton} onPress={() => setIsCameraActive(false)}>
         <Text style={styles.cameraButtonText}>Cancelar</Text> 
       </TouchableOpacity> 
     </View> 
@@ -165,7 +176,7 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   cameraButton: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
     padding: 10,
     borderRadius: 5,
     paddingHorizontal: 10,
@@ -173,7 +184,11 @@ const styles = StyleSheet.create({
   },
   cameraButtonText: {
     fontSize: 18,
-    color: "black",
+    color: "rgba(255, 255, 255, 0.5)",
+  },
+  switchCamIcon: {
+    color: "white",
+    fontSize: 38,
   },
   profileImage: {
     width: 150,
@@ -206,7 +221,7 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
     padding: 10,
     borderRadius: 15,
-    marginTop: 20,
+    marginTop: 15,
   },
   videoContainer: {
     marginTop: 20,

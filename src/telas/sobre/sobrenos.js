@@ -24,7 +24,7 @@ export default function SobreNos() {
 const styles = StyleSheet.create({
     containerS: {
     flex: 1,
-    backgroundColor: "grey",
+    backgroundColor: "f5f5f5",
     paddingVertical: 8,
     paddingHorizontal: 8,
     justifyContent: "top",
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         marginLeft: 6,
         marginRight: 6,
         fontSize: 22,
-        textShadowRadius: 5,
+        textShadowRadius: 2,
         textShadowColor: "black",
         textAlign: "center",
         textTransform: "uppercase",
