@@ -1,17 +1,18 @@
 import React from 'react';
 import { StatusBar, StyleSheet, View, Image } from 'react-native';
 import Texto from '../../../componentes/Texto';
+import Topos24 from '../../../../assets/s24ultra.jpg';
 
-export default function Topo({ titulo, tituloprod, imagemSelecionada }) {
-  return (
-    <>
-      <StatusBar />
-      <View style={styles.container}>
-        <Image source={imagemSelecionada} style={styles.Imagem} />
-        <Texto style={styles.textImage}>{tituloprod}</Texto>
-      </View>
-    </>
-  );
+export default function Topo({ titulo, tituloprod }) {
+  return <>
+    <StatusBar />
+    <View style={styles.container}>
+      <Texto style={styles.tipag}>{titulo}</Texto>
+      <Image source={Topos24} style={styles.Imagem} />
+
+      <Texto style={styles.textImage}>{tituloprod}</Texto>
+    </View>
+  </>
 }
 
 const styles = StyleSheet.create({

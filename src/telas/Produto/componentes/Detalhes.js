@@ -19,7 +19,7 @@ export default function Detalhes({preco, detalhes, nome}) {
       
     <Image source={Icon} style={styles.IconeCel} />
     
-    <Texto style={styles.tituloprod}>Produto</Texto>
+    <Texto style={styles.tituloprod}>Produto em destaque</Texto>
     
       <Botao textoBotao={"ADICIONAR NA LISTA DE DESEJOS"} acaoBotao={() => { Alert.alert("Em breve!", "Estamos preparando uma novidade para você."); }}></Botao>
   </View>

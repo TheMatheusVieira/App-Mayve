@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { Card } from '@rneui/themed';
 import { FlatList } from 'react-native';
 
-import Topo from './Topo'; // Importar o componente Topo
+import Topo from '../Produto/componentes/Topo'; // Importar o componente Topo
 import prod24 from '../../../assets/s24ultra.jpg';
 import prodbjbl from '../../../assets/boomboxjbl.jpg';
 import noteBook from '../../../assets/GalaxyBook.jpg';
@@ -23,6 +23,7 @@ const data = [
 export default function Visuali() {
   const [selectedImage, setSelectedImage] = useState(prod24); // Estado para armazenar a imagem selecionada
   const [selectedTitle, setSelectedTitle] = useState('SAMSUNG S24'); // Estado para armazenar o título
+  
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -41,17 +42,19 @@ export default function Visuali() {
     </TouchableOpacity>
   );
 
-  return (
+ return (
     <>
+      {/* Passa a imagem e o título selecionados para o componente Topo */}
       <Topo titulo="Detalhes do Produto" tituloprod={selectedTitle} imagemSelecionada={selectedImage} />
       <FlatList
-        data={data}
+        data={data}  // Certifique-se de que "data" contém os itens corretos
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
     </>
   );
 }
+
 
 const styles = StyleSheet.create({
 Imagem: {
