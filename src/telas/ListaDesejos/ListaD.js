@@ -14,7 +14,10 @@ import budslive from '../../../assets/budslive.jpg';
 const produtos = [
   { id: 1, nome: "Galaxy S24 Ultra", preco: "R$ 8.399,00", imagem: prod24 },
   { id: 2, nome: "Galaxy Book S", preco: "R$ 6.499,00", imagem: noteBook },
-  { id: 3, nome: "JBL GO 3", preco: "R$ 499,90", imagem: JBLgo3 }
+  { id: 3, nome: "JBL GO 3", preco: "R$ 350,00", imagem: JBLgo3 },
+  { id: 4, nome: "BUDS LIVE", preco: "299,00", imagem: budslive },
+  { id: 5, nome: "TABLET S6 LITE", preco: "1999,00", imagem: tabs6lite },
+  { id: 6, nome: 'JBL BOOMBOX', preco:"1199,00", image: prodbjbl },
 ];
 
 export default function ListaDesj() {
