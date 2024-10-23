@@ -1,90 +1,68 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from 'react-native';
-import Icon from '../../../../assets/IconCel.png'; // Adapte o caminho conforme a estrutura do projeto
-import Texto from '../../../componentes/Texto'; // Adapte conforme necessário
-import Botao from '../../../componentes/Botao'; // Adapte conforme necessário
-import prod24 from '../../../assets/s24ultra.jpg'; // Imagem do produto exemplo
-import { scanFromURLAsync } from 'expo-camera';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, FlatList, Image } from 'react-native';
+import ListaDesj from './../ListaDesejos/ListaD';
 
 export default function Inicial() {
-  const handleWishList = () => {
-    Alert.alert("Em breve!", "Estamos preparando uma novidade para você.");
-  };
+  const [listaDesejos, setListaDesejos] = useState([]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Início</Text>
-      </View>
+      <Text style={styles.titulo}>Início</Text>
 
-      {/* Detalhes do produto */}
-      <View style={styles.productDetails}>
-        <Image source={Icon} style={styles.IconeCel} />
-        <Texto style={styles.tituloprod}>Produto</Texto>
-        <Texto style={styles.descricao}>
-          Bem-vindo à era da IA móvel. Com o Galaxy S24 Ultra em suas mãos, você pode liberar níveis totalmente novos de criatividade, produtividade e potencial, começando com o dispositivo mais importante da sua vida: seu celular.
-        </Texto>
-        <Texto style={styles.preco}>R$ 8.399,00</Texto>
+      {/* Lista de desejos no início */}
+      <Text style={styles.subtitulo}>Seus Desejos</Text>
+      {listaDesejos.length === 0 ? (
+        <Text style={styles.listaVazia}>Você não tem itens na lista de desejos.</Text>
+      ) : (
+        <FlatList
+          data={listaDesejos}
+          renderItem={({ item }) => (
+            <View style={styles.listaDesejoItem}>
+              <Image source={item.imagem} style={styles.produtoImagem} />
+              <Text style={styles.produtoNome}>{item.nome}</Text>
+            </View>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      )}
 
-        {/* Exibindo imagem do produto */}
-        <Image source={prod24} style={styles.produtoImage} />
-        
-        {/* Botão de ação */}
-        <Botao textoBotao={"ADICIONAR NA LISTA DE DESEJOS"} acaoBotao={handleWishList} />
-      </View>
+      {/* Lista de produtos para adicionar à lista de desejos */}
+      <ListaDesj listaDesejos={listaDesejos} setListaDesejos={setListaDesejos} />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    padding: 20,
   },
-  header: {
-    paddingVertical: 15,
-    backgroundColor: '#F7F7F7',
-    alignItems: 'center',
+  titulo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
-  headerText: {
+  subtitulo: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333333',
+    marginVertical: 10,
   },
-  productDetails: {
-    paddingVertical: 15,
-    alignItems: 'center',
-  },
-  IconeCel: {
-    width: 60,
-    height: 60,
-    resizeMode: 'contain',
-    marginBottom: 10,
-  },
-  tituloprod: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  descricao: {
+  listaVazia: {
+    marginTop: 20,
     fontSize: 16,
-    textAlign: 'center',
-    color: '#666666',
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    fontStyle: 'italic',
   },
-  preco: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#000000',
-    marginBottom: 20,
+  listaDesejoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
   },
-  produtoImage: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
-    marginBottom: 20,
+  produtoImagem: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  produtoNome: {
+    fontSize: 16,
   },
 });
