@@ -1,68 +1,90 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, FlatList, Image } from 'react-native';
-import ListaDesj from './../ListaDesejos/ListaD';
+import React from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from 'react-native';
+import Icon from '../../../../assets/IconCel.png'; // Adapte o caminho conforme a estrutura do projeto
+import Texto from '../../../componentes/Texto'; // Adapte conforme necessário
+import Botao from '../../../componentes/Botao'; // Adapte conforme necessário
+import prod24 from '../../../assets/s24ultra.jpg'; // Imagem do produto exemplo
+import { scanFromURLAsync } from 'expo-camera';
 
 export default function Inicial() {
-  const [listaDesejos, setListaDesejos] = useState([]);
+  const handleWishList = () => {
+    Alert.alert("Em breve!", "Estamos preparando uma novidade para você.");
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Início</Text>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Início</Text>
+      </View>
 
-      {/* Lista de desejos no início */}
-      <Text style={styles.subtitulo}>Seus Desejos</Text>
-      {listaDesejos.length === 0 ? (
-        <Text style={styles.listaVazia}>Você não tem itens na lista de desejos.</Text>
-      ) : (
-        <FlatList
-          data={listaDesejos}
-          renderItem={({ item }) => (
-            <View style={styles.listaDesejoItem}>
-              <Image source={item.imagem} style={styles.produtoImagem} />
-              <Text style={styles.produtoNome}>{item.nome}</Text>
-            </View>
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      )}
+      {/* Detalhes do produto */}
+      <View style={styles.productDetails}>
+        <Image source={Icon} style={styles.IconeCel} />
+        <Texto style={styles.tituloprod}>Produto</Texto>
+        <Texto style={styles.descricao}>
+          Bem-vindo à era da IA móvel. Com o Galaxy S24 Ultra em suas mãos, você pode liberar níveis totalmente novos de criatividade, produtividade e potencial, começando com o dispositivo mais importante da sua vida: seu celular.
+        </Texto>
+        <Texto style={styles.preco}>R$ 8.399,00</Texto>
 
-      {/* Lista de produtos para adicionar à lista de desejos */}
-      <ListaDesj listaDesejos={listaDesejos} setListaDesejos={setListaDesejos} />
+        {/* Exibindo imagem do produto */}
+        <Image source={prod24} style={styles.produtoImage} />
+        
+        {/* Botão de ação */}
+        <Botao textoBotao={"ADICIONAR NA LISTA DE DESEJOS"} acaoBotao={handleWishList} />
+      </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
-  titulo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+  header: {
+    paddingVertical: 15,
+    backgroundColor: '#F7F7F7',
+    alignItems: 'center',
   },
-  subtitulo: {
+  headerText: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginVertical: 10,
+    color: '#333333',
   },
-  listaVazia: {
-    marginTop: 20,
-    fontSize: 16,
-    fontStyle: 'italic',
-  },
-  listaDesejoItem: {
-    flexDirection: 'row',
+  productDetails: {
+    paddingVertical: 15,
     alignItems: 'center',
-    marginVertical: 10,
   },
-  produtoImagem: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
+  IconeCel: {
+    width: 60,
+    height: 60,
+    resizeMode: 'contain',
+    marginBottom: 10,
   },
-  produtoNome: {
+  tituloprod: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  descricao: {
     fontSize: 16,
+    textAlign: 'center',
+    color: '#666666',
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  preco: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000000',
+    marginBottom: 20,
+  },
+  produtoImage: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+    marginBottom: 20,
   },
 });

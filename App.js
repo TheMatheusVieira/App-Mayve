@@ -5,6 +5,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+import { DesejosProvider } from "./src/context/DesejosContext";
+// import TabsMenu from "./src/TabsMenu";
+// 
 import { Audio } from "expo-av";
 
 import Produto from './src/telas/Produto';
@@ -14,6 +17,7 @@ import ListaDesj from "./src/telas/ListaDesejos/ListaD";
 import Cards from "./src/telas/ViewProuto/Visuali"; 
 import perfil from "./src/telas/Perfil/perfil";
 
+import Destaque from "./src/telas/Pdestaque/pDestaque";
 
 function MenuKit() {
   return <Produto {...mock} />
@@ -67,6 +71,10 @@ function ListaD() {
   return <ListaDesj />
 }
 
+function PDestaque() { 
+  return <Destaque/>
+}
+
 const Tab = createBottomTabNavigator();
 
 function TabsMenu() {
@@ -95,27 +103,35 @@ function TabsMenu() {
           iconName = focused
             ? 'person'
             : 'person-circle-outline'
-        } 
+        } else if (route.name === "Destaque") {
+          iconName = focused
+            ? 'star'
+            : 'star-outline'
+        }
 
-        return <Ionicons name={iconName} size={size} color={color}/>
-        },  
+        return <Ionicons name={iconName} size={size} color={color} />
+      },
       tabBarActiveTintColor: 'black',
       tabBarInactiveTintColor: 'gray',
       tabBarHideOnKeyboard: true,
       headerShown: true,
     })}>
     <Tab.Screen name="Início" component={MenuKit} />
+    <Tab.Screen name="Destaque" component={PDestaque} />
     <Tab.Screen name="Sobre nós" component={SobreN} />
     <Tab.Screen name="Produtos" component={ViewProd} />
     <Tab.Screen name="Lista de Desejos" component={ListaD} />
     <Tab.Screen name="Perfil" component={perfil} />
-</Tab.Navigator>
+    </Tab.Navigator>
 }
 
 export default function App() {
   //return < Produto />
-  return <NavigationContainer >
-    <TabsMenu />
-    <MenuAudio/>
-  </NavigationContainer>
+  return (
+    <DesejosProvider>
+      <NavigationContainer>
+        <TabsMenu />
+      </NavigationContainer>
+    </DesejosProvider>
+  );
 }
