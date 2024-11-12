@@ -10,7 +10,7 @@ export default function SobreNos() {
         <ScrollView>
         <View style={styles.containerS}>
         <Image source={Icon} style={styles.IconeCel}/>
-            <Text style={styles.textosobre}> Bem-vindo à Mayve Store, o seu destino definitivo para a mais recente
+            <Text style={styles.textosobre}>Bem-vindo à Mayve Store, o seu destino definitivo para a mais recente
                 tecnologia e inovação eletrônica! Na Mayve, estamos empenhados em oferecer uma ampla variedade
                 de produtos eletrônicos de alta qualidade, desde smartphones e laptops até gadgets
                 inteligentes e acessórios de última geração.</Text>

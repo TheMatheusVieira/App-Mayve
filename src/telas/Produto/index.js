@@ -1,31 +1,26 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
-import Topo from './componentes/Topo';
-import Detalhes from './componentes/Detalhes';
-import Item from './componentes/Item'
-import Texto from '../../componentes/Texto';
-
-export default function Index({ topo, detalhes, itens }) {
+export default function Index({ }) {
   return <>
-    <Texto style={styles.tiprod}>{itens.prod}</Texto>
-  <FlatList
-    data={itens.lista}
-      renderItem={Item}
-      keyExtractor={itens.lista.nome}
-      ListHeaderComponent={() => {
-        return <>
-    <Topo {...topo} />
-          <Detalhes {...detalhes} />
-        </>
-      }}
-    />
+    <View style={styles.container}>
+      <Text style={styles.tiInicio}>Bem-vindo(a) à Mayve Shop.</Text>
+      <Text style={styles.descInicio}>Sua loja de eletrônicos</Text> 
+      </View>
 </>
 }
 
 const styles = StyleSheet.create({
-tiprod: {
-    color: "red",
-},
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tiInicio: {
+    fontSize: 20,
+  },
+  descInicio: {
+    fontSize: 15,
+  }
 })
 

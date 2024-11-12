@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 20,
   },
   camera: {
     width:"100%",
