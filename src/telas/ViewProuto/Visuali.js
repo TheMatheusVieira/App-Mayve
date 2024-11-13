@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { Card } from '@rneui/themed';
 import { FlatList } from 'react-native';
 
-import Topo from '../Produto/componentes/Topo'; // Importar o componente Topo
+// Importar o componente Topo
 import prod24 from '../../../assets/s24ultra.jpg';
 import prodbjbl from '../../../assets/boomboxjbl.jpg';
 import noteBook from '../../../assets/GalaxyBook.jpg';
@@ -45,7 +45,6 @@ export default function Visuali() {
  return (
     <>
       {/* Passa a imagem e o título selecionados para o componente Topo */}
-      <Topo titulo="Detalhes do Produto" tituloprod={selectedTitle} imagemSelecionada={selectedImage} />
       <FlatList
         data={data}  // Certifique-se de que "data" contém os itens corretos
         renderItem={renderItem}

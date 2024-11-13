@@ -126,11 +126,11 @@ function TabsMenu() {
 }
 
 export default function App() {
-  //return < Produto />
   return (
     <DesejosProvider>
       <NavigationContainer>
         <TabsMenu />
+        <MenuAudio/>
       </NavigationContainer>
     </DesejosProvider>
   );

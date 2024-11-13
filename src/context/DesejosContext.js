@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DesejosContext = createContext();
 
+export const useDesejos = () => useContext(DesejosContext);
+
 export const DesejosProvider = ({ children }) => {
   const [listaDesejos, setListaDesejos] = useState([]);
   const [imagemDestaque, setImagemDestaque] = useState(null);
@@ -11,10 +13,15 @@ export const DesejosProvider = ({ children }) => {
   // Carregar os dados salvos ao iniciar o aplicativo
   useEffect(() => {
     const carregarDados = async () => {
-      const desejosSalvos = await AsyncStorage.getItem('listaDesejos');
-      const imagemSalva = await AsyncStorage.getItem('imagemDestaque');
-      if (desejosSalvos) setListaDesejos(JSON.parse(desejosSalvos));
-      if (imagemSalva) setImagemDestaque(imagemSalva);
+      try {
+        const desejosSalvos = await AsyncStorage.getItem('listaDesejos');
+        const imagemSalva = await AsyncStorage.getItem('imagemDestaque');
+        
+        if (desejosSalvos) setListaDesejos(JSON.parse(desejosSalvos));
+        if (imagemSalva) setImagemDestaque(JSON.parse(imagemSalva));
+      } catch (error) {
+        console.error('Erro ao carregar dados do AsyncStorage:', error);
+      }
     };
     carregarDados();
   }, []);
@@ -25,7 +32,11 @@ export const DesejosProvider = ({ children }) => {
   }, [listaDesejos]);
 
   useEffect(() => {
-    AsyncStorage.setItem('imagemDestaque', imagemDestaque);
+    if (imagemDestaque) {
+      AsyncStorage.setItem('imagemDestaque', JSON.stringify(imagemDestaque));
+    } else {
+      AsyncStorage.removeItem('imagemDestaque'); // Remove a imagem se for null
+    }
   }, [imagemDestaque]);
 
   const adicionarAListaDesejos = (item) => {
@@ -44,8 +55,24 @@ export const DesejosProvider = ({ children }) => {
   };
 
   const removerDaListaDesejos = (id) => {
-    setListaDesejos((prevState) => prevState.filter((desejo) => desejo.id !== id));
+    setListaDesejos((prevState) => {
+      return prevState
+        .map((desejo) => {
+          if (desejo.id === id) {
+            return { ...desejo, quantidade: desejo.quantidade - 1 };
+          }
+          return desejo;
+        })
+        .filter((desejo) => desejo.quantidade > 0); // Remove o item se a quantidade for zero
+    });
+  
+    // Atualizar a imagem em destaque caso o item removido seja o destaque atual e a quantidade chegue a zero
+    const itemRemovido = listaDesejos.find((desejo) => desejo.id === id);
+    if (imagemDestaque === itemRemovido?.imagem && itemRemovido?.quantidade === 1) {
+      setImagemDestaque(null);
+    }
   };
+  
 
   return (
     <DesejosContext.Provider
@@ -54,7 +81,7 @@ export const DesejosProvider = ({ children }) => {
         imagemDestaque,
         adicionarAListaDesejos,
         removerDaListaDesejos,
-        setImagemDestaque
+        setImagemDestaque,
       }}
     >
       {children}
@@ -62,4 +89,3 @@ export const DesejosProvider = ({ children }) => {
   );
 };
 
-export const useDesejos = () => useContext(DesejosContext);
