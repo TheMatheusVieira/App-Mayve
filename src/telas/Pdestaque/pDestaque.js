@@ -9,10 +9,12 @@ export default function PDestaque() {
   return (
     <View style={styles.container}>
      
+     <Text style={styles.productTitle}>ÚLTIMO FAVORITO</Text>
+
       {imagemDestaque ? (
         <Image source={imagemDestaque} style={styles.produtoImagem} />
       ) : (
-        <Text style={styles.aviso}>Selecione um produto para ver o destaque.</Text>
+        <Text style={styles.aviso}>Você ainda não selecionou um favorito.</Text>
           )}
           
            {/* Informações do produto */}
@@ -44,6 +46,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   produtoImagem: {
+    flex: 1,
     marginVertical: 20,
     width: "100%",
     height: "75%",

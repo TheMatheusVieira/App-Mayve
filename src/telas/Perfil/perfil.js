@@ -6,10 +6,14 @@ import {
   TextInput,
   Text,
   Image,
-  ScrollView
+  ScrollView, 
+  Alert
 } from "react-native";
 import { Camera, CameraType } from "expo-camera/legacy";
 import { Video } from "expo-av";
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Perfil() {
   const [nomeuser, mudaNome] = useState("");
@@ -23,6 +27,45 @@ export default function Perfil() {
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
+  const salvarDados = async () => {
+    try {
+      const userInfo = {
+        nomeuser,
+        sobrenomeuser,
+        cidadeuser,
+        profiuser,
+      };
+      await AsyncStorage.setItem('@perfil_usuario', JSON.stringify(userInfo));
+      Alert.alert(
+        "Muito bem!", // Título do alerta
+        "Suas informações foram salvas com sucesso!", // Mensagem do alerta
+        [
+          { text: "OK" } // Botão
+        ]
+      );
+    } catch (e) {
+      console.error("Erro ao salvar os dados", e);
+    }
+  };
+  
+  const carregarDados = async () => {
+    try {
+      const userInfo = await AsyncStorage.getItem('@perfil_usuario');
+      if (userInfo) {
+        const { nomeuser, sobrenomeuser, cidadeuser, profiuser } = JSON.parse(userInfo);
+        mudaNome(nomeuser);
+        mudaSobrenome(sobrenomeuser);
+        mudaCidade(cidadeuser);
+        mudaProfi(profiuser);
+      }
+    } catch (e) {
+      console.error("Erro ao carregar os dados", e);
+    }
+  };
+  useEffect(() => {
+    carregarDados();
+  }, []);
+  
 
   useEffect(() => {
     const requestCameraPermission = async () => {
@@ -108,9 +151,10 @@ export default function Perfil() {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.btsalvar}>
-        <Text>SALVAR INFORMAÇÕES</Text>
-      </TouchableOpacity>
+      <TouchableOpacity style={styles.btsalvar} onPress={salvarDados}>
+  <Text>SALVAR INFORMAÇÕES</Text>
+</TouchableOpacity>
+
 
       <View style={styles.videoContainer}>
         <Video
@@ -160,7 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 30,
   },
   camera: {
     width:"100%",

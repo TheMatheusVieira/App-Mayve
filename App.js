@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useFonts } from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
+
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
